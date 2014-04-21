@@ -21,7 +21,7 @@ class Projet(models.Model):
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     en_cours = models.BooleanField(default=True, help_text="état du projet, si il est en cours ou non")
     nom_client = models.CharField(max_length=400,help_text="le nom du client principal du projet")
-    responsable = models.ForeignKey('Utilisateur')
+    responsable = models.ForeignKey(User)
 
 
 class Document(models.Model):
@@ -34,16 +34,11 @@ class Document(models.Model):
     			 - commentaire : les informations relatives au documents saisie par l'utilisateur
 
     """
-    url = models.URLField("URL",unique=True)
+    url = models.FileField(upload_to='doc/')
     date_publiee = models.DateField('Date publiee',auto_now=True,help_text="La date a laquelle le document a ete integre au systeme")
-    proprietaire = models.ForeignKey('Utilisateur')
+    proprietaire = models.ForeignKey(User)
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     commentaire = models.CharField(max_length=8000,help_text="commentaires sur document")
-
-
-class Utilisateur(User):
-    pass
-
 
 class Exigence(models.Model):
     """
@@ -56,4 +51,4 @@ class Exigence(models.Model):
     """
     commentaire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
     descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
-    projet = Projet
+    projet = models.ForeignKey(Projet)
