@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 ADMINS = (
-    ('admin','menichelli.c@gmail.com'), #ca faudra le changer :0
+    ('admin','admin@admin.fr'), #a changer
 )
 
 # Quick-start development settings - unsuitable for production
