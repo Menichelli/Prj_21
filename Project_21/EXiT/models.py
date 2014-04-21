@@ -28,7 +28,7 @@ class Document(models.Model):
     """
     Objet qui rasemble les informations d'un document utilise au sein de l'application.
     C'est à dire :
-                 - id : identifiant unique (généré autaomatiquement par Django)
+                 - id : identifiant unique (généré automatiquement par Django)
     			 - date_publiee : la date correspondant a son entree dans la base de donnee
     			 - proprietaire : l'utilisateur qui a rentre le document au sein du systeme
     			 - commentaire : les informations relatives au documents saisie par l'utilisateur
