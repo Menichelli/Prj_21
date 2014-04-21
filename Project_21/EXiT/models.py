@@ -22,8 +22,8 @@ class Projet(models.Model):
     nom = models.CharField(max_length=400,help_text="nom du projet")
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     en_cours = models.BooleanField(default=True, help_text="état du projet, si il est en cours ou non")
-    nom_client = models.CharField(max_length=400,help_text="le nom du client princiapl du projet")
-    responsable = models.Utilisateur(help_text="le responsable du projet")
+    nom_client = models.CharField(max_length=400,help_text="le nom du client principal du projet")
+    responsable = Utilisateur(help_text="le responsable du projet")
 
 
 class Document(models.Model):
@@ -43,7 +43,7 @@ class Document(models.Model):
     commentraire = models.CharField(max_length=8000,help_text="commentaires sur document")
 
 
-class Utilisateur(models.Model):
+class Utilisateur(User):
      """
      Objet qui rassemble les informations liées à un utilisateur.
      C'est à dire :
@@ -56,7 +56,6 @@ class Utilisateur(models.Model):
      nom = models.CharField(max_length=400,help_text="nom de l'utilisateur")
      prenom = models.CharField(max_length=400,help_text="prenom de l'utilisateur")
      informations = models.CharField(max_length=400,help_text="informations relatives a l'utilisateur")
-     user = models.OneToOneField(User)
 
 
 class Exigence(models.Model):
@@ -70,4 +69,4 @@ class Exigence(models.Model):
     """
     commentraire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
     descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
-    projet = models.ForeignKey('Projet')
+    projet = Projet
