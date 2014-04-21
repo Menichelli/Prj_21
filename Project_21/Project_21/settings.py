@@ -108,7 +108,7 @@ IMG_URL = "/static/img/"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-	"/var/sylene/sylene_project/sylene/static",
+	"/var/Prj_21/Project_21/EXiT/static",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
