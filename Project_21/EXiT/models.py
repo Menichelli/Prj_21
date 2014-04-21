@@ -42,18 +42,7 @@ class Document(models.Model):
 
 
 class Utilisateur(User):
-     """
-     Objet qui rassemble les informations liées à un utilisateur.
-     C'est à dire :
-                  - id : identifiant unique (généré autaomatiquement par Django)
-                  - nom : le nom de la personne
-                  - prenom : le nom de la personne
-                  - informations : des informations relatives à la personnes
-     """
-
-     nom = models.CharField(max_length=400,help_text="nom de l'utilisateur")
-     prenom = models.CharField(max_length=400,help_text="prenom de l'utilisateur")
-     information = models.CharField(max_length=400,help_text="informations relatives a l'utilisateur")
+    pass
 
 
 class Exigence(models.Model):
