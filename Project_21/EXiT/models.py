@@ -1,6 +1,8 @@
 # -*- coding: latin-1 -*-
 
 from django.db import models
+from django.contrib.auth.models import User
+
 from django.core.exceptions import ValidationError
 import datetime
 
@@ -21,7 +23,8 @@ class Projet(models.Model):
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     en_cours = models.BooleanField(default=True, help_text="état du projet, si il est en cours ou non")
     nom_client = models.CharField(max_length=400,help_text="le nom du client princiapl du projet")
-    responsable = models.utilisateur(help_text="le responsable du projet")
+    responsable = models.Utilisateur(help_text="le responsable du projet")
+
 
 class Document(models.Model):
     """
@@ -39,6 +42,7 @@ class Document(models.Model):
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     commentraire = models.CharField(max_length=8000,help_text="commentaires sur document")
 
+
 class Utilisateur(models.Model):
      """
      Objet qui rassemble les informations liées à un utilisateur.
@@ -52,6 +56,8 @@ class Utilisateur(models.Model):
      nom = models.CharField(max_length=400,help_text="nom de l'utilisateur")
      prenom = models.CharField(max_length=400,help_text="prenom de l'utilisateur")
      informations = models.CharField(max_length=400,help_text="informations relatives a l'utilisateur")
+     user = models.OneToOneField(User)
+
 
 class Exigence(models.Model):
     """
@@ -60,6 +66,8 @@ class Exigence(models.Model):
                  - id : identifiant unique (généré autaomatiquement par Django)
                  - description : la description de l'éxigence
                  - commentaire : commentaire sur l'exigence
+                 - projet : le projet auquel
     """
-    id_unique = models.IntegerField(unique=True)
     commentraire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
+    descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
+    projet = models.ForeignKey('Projet')
