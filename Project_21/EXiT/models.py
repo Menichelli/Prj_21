@@ -3,8 +3,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from django.core.exceptions import ValidationError
-import datetime
 
 class Projet(models.Model):
     """
@@ -23,7 +21,7 @@ class Projet(models.Model):
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     en_cours = models.BooleanField(default=True, help_text="état du projet, si il est en cours ou non")
     nom_client = models.CharField(max_length=400,help_text="le nom du client principal du projet")
-    responsable = Utilisateur(help_text="le responsable du projet")
+    responsable = models.ForeignKey('Utilisateur')
 
 
 class Document(models.Model):
@@ -38,9 +36,9 @@ class Document(models.Model):
     """
     url = models.URLField("URL",unique=True)
     date_publiee = models.DateField('Date publiee',auto_now=True,help_text="La date a laquelle le document a ete integre au systeme")
-    proprietaire = models.utilisateur(help_text="personne ayant saisie le document au sein de l'application")
+    proprietaire = models.ForeignKey('Utilisateur')
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
-    commentraire = models.CharField(max_length=8000,help_text="commentaires sur document")
+    commentaire = models.CharField(max_length=8000,help_text="commentaires sur document")
 
 
 class Utilisateur(User):
@@ -55,7 +53,7 @@ class Utilisateur(User):
 
      nom = models.CharField(max_length=400,help_text="nom de l'utilisateur")
      prenom = models.CharField(max_length=400,help_text="prenom de l'utilisateur")
-     informations = models.CharField(max_length=400,help_text="informations relatives a l'utilisateur")
+     information = models.CharField(max_length=400,help_text="informations relatives a l'utilisateur")
 
 
 class Exigence(models.Model):
@@ -67,6 +65,6 @@ class Exigence(models.Model):
                  - commentaire : commentaire sur l'exigence
                  - projet : le projet auquel
     """
-    commentraire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
+    commentaire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
     descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
     projet = Projet
