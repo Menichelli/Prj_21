@@ -17,12 +17,16 @@ class Projet(models.Model):
     				- nom_client : le nom du client
     				- responsable : l'utilisateur responsable
     """
-    date_debut = models.DateField('Date publiee',auto_now=True,help_text="la date à laquelle le projet a debute")
+    date_debut = models.DateField('Date de debut',auto_now=True,help_text="la date à laquelle le projet a debute")
+    date_de_cloture = models.DateField('Date de cloture', null=True)
     nom = models.CharField(max_length=400,help_text="nom du projet")
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
-    en_cours = models.BooleanField(default=True, help_text="état du projet, si il est en cours ou non")
     nom_client = models.CharField(max_length=400,help_text="le nom du client principal du projet")
     responsable = models.ForeignKey(User)
+
+    def clean(self):
+        if self.date_debut >= self.date_de_cloture:
+            raise ValidationError('La date de cloture ne peut etre anterieur a la date de debut.')
 
 
 class Document(models.Model):
@@ -39,7 +43,7 @@ class Document(models.Model):
     date_publiee = models.DateField('Date publiee',auto_now=True,help_text="La date a laquelle le document a ete integre au systeme")
     proprietaire = models.ForeignKey(User)
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
-    commentaire = models.CharField(max_length=8000,help_text="commentaires sur document")
+    commentaire = models.ForeignKey(Commentaire)
     projet = models.ForeignKey(Projet)
 
 class Exigence(models.Model):
@@ -51,7 +55,13 @@ class Exigence(models.Model):
                  - commentaire : commentaire sur l'exigence
                  - projet : le projet auquel
     """
-    commentaire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
+    commentaire = models.O
     descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
     projet = models.ForeignKey(Projet)
     priorite = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+    atteinte = models.BooleanField(default=False)
+    docs = models.ManyToManyRel(Document)
+
+class Commentaire(models.Model):
+    utilisateur = models.ForeignKey(User)
+    text = models.TextField(max_length=8000,null=False)
