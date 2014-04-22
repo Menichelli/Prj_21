@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Projet(models.Model):
@@ -34,11 +35,12 @@ class Document(models.Model):
     			 - commentaire : les informations relatives au documents saisie par l'utilisateur
 
     """
-    url = models.FileField(upload_to='doc/')
+    fichier = models.FileField(upload_to='doc/')
     date_publiee = models.DateField('Date publiee',auto_now=True,help_text="La date a laquelle le document a ete integre au systeme")
     proprietaire = models.ForeignKey(User)
     descriptif = models.CharField(max_length=8000,help_text="informations relatives au document")
     commentaire = models.CharField(max_length=8000,help_text="commentaires sur document")
+    projet = models.ForeignKey(Projet)
 
 class Exigence(models.Model):
     """
@@ -52,3 +54,4 @@ class Exigence(models.Model):
     commentaire = models.CharField(max_length=8000,help_text="informations relatives a l'exigence")
     descriptif = models.CharField(max_length=8000,help_text="description de l'exigence")
     projet = models.ForeignKey(Projet)
+    priorite = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
